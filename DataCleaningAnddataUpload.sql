@@ -1,7 +1,7 @@
 create database SqlProjects;
 use SqlProjects;
 select *  from retailsales;
--- data cleaning 
+# -- data cleaning 
 select count(*) from retailsales;
 
 alter table retailsales 
@@ -19,7 +19,7 @@ from retailsales
 where transaction_id IS NULL OR sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR gender IS NULL OR age IS NULL OR 
 category IS NULL OR quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL OR total_sale IS NULL;
 SET SQL_SAFE_UPDATES = 0;
-
+# Findings 
 -- Write a SQL quer	y to retrieve all columns for sales made on '2022-11-05
 use SqlProjects;
 select *  from retailsales;
@@ -45,18 +45,20 @@ SELECT * FROM sqlprojects.retailsales;
 select round(avg(age),2) as 'Cust_Avg_age'
 from retailsales
 where category = 'Beauty';
+
 -- Write a SQL query to find all transactions where the total_sale is greater than 1000.:
 select *, sum(total_sale) as Total_Revenue_by_category, extract(year from sale_date) as year
 from retailsales
 where total_sale > 1000
 group by category
 order by total_sale;
+
 -- Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.:
 select count(*) as 'number_of_transaction',gender,category
 from retailsales
 group by gender,category;
--- Write a SQL query to calculate the average sale for each month. Find out best selling month in each year:
 
+-- Write a SQL query to calculate the average sale for each month. Find out best selling month in each year:
 with my_cte as( 
 select EXTRACT(MONTH FROM sale_date) as MonthNumber, 
 EXTRACT(Year FROM sale_date) as year,
@@ -77,14 +79,13 @@ group by year
 )
 order by 
 year,MonthNumber;
+
 -- year count 
 select count(*), extract(year from sale_date) as year_count
 from retailsales 
 group by year_count;
 
 -- Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17):
-
-
 WITH hourly_sales AS(
 select *, 
 case 
